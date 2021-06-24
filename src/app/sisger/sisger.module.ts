@@ -2,20 +2,25 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SisgerRoutingModule } from './sisger-routing.module';
-import { HomeComponent } from './pages/home/home.component';
-import { NotificationsModule } from './modules/notifications/notifications.module';
 import { MaterialModule } from '../material/material.module';
+import { HomeComponent } from './pages/home/home.component';
+import { ClientPipe } from './pipes/client.pipe';
+import { DispatchComponent } from './pages/container-dispatch/dispatch/dispatch.component';
+import { NoticationComponent } from './pages/notification/notification/notication.component';
+
 
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    DispatchComponent,
+    NoticationComponent,
+    ClientPipe
   ],
   imports: [
     CommonModule,
     SisgerRoutingModule,
-    NotificationsModule,
-    MaterialModule
+    MaterialModule,
   ]
 })
 export class SisgerModule { }

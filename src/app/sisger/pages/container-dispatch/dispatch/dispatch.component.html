@@ -1,0 +1,44 @@
+<div class="container">
+    <h1>{{title}}</h1>
+  
+    <div class="list-container">
+  
+      <div class="todo-container column-container">
+        <div class="list"
+            cdkDropList
+            #container="cdkDropList"
+            [cdkDropListData]="containerItems"
+            [cdkDropListConnectedTo]="[warehouse]"
+            (cdkDropListDropped)="drop($event)"
+        >
+          <h2>Contenedor # 7 / JULIO - 2021</h2>
+          <mat-card *ngFor="let bulto of containerItems" cdkDrag>
+            <mat-card-header>
+              <mat-card-title>{{bulto.sisgerCode}}</mat-card-title>
+              <mat-card-subtitle>{{bulto | client}}</mat-card-subtitle>
+            </mat-card-header>
+          </mat-card>
+        </div>
+      </div>
+  
+      <div class="done-container column-container">
+        <div class="list"
+             cdkDropList
+             #warehouse="cdkDropList"
+             [cdkDropListData]="warehouseItems"
+             [cdkDropListConnectedTo]="[container]"
+             (cdkDropListDropped)="drop($event)"
+            
+        >
+          <h2>Almacén</h2>
+          <mat-card *ngFor="let bulto of warehouseItems" cdkDrag>
+            <mat-card-header>
+              <mat-card-title>{{bulto.sisgerCode}}</mat-card-title>
+              <mat-card-subtitle>{{bulto | client}}</mat-card-subtitle>
+            </mat-card-header>
+          </mat-card>
+        </div>
+      </div>
+  
+    </div>
+  </div>

@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
+import { NoticationComponent } from './pages/notification/notification/notication.component';
+import { DispatchComponent } from './pages/container-dispatch/dispatch/dispatch.component';
+
 
 const routes: Routes = [
   {
@@ -8,12 +11,16 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {
-        path: 'notification',
-        loadChildren: () => import('./modules/notifications/notifications.module').then( m => m.NotificationsModule)
+        path: 'notificaciones',
+        component: NoticationComponent
+      },
+      {
+        path: 'despacho',
+        component: DispatchComponent
       },
       {
         path:'**',
-        redirectTo: 'notification'
+        redirectTo: 'notificaciones'
       }
     ]
   }

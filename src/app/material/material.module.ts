@@ -1,21 +1,15 @@
 import { NgModule } from '@angular/core';
 
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatTreeModule } from '@angular/material/tree';
-import { MatToolbarModule } from '@angular/material/toolbar';
+
+import {MatCardModule} from '@angular/material/card';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+
 
 
 @NgModule({
   exports: [
-    MatButtonModule,
-    MatIconModule,
-    MatListModule,
-    MatSidenavModule,
-    MatTreeModule,
-    MatToolbarModule
+    MatCardModule,
+    DragDropModule
   ]
 })
 export class MaterialModule { }
