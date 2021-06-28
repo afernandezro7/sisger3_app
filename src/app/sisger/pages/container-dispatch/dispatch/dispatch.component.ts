@@ -23,10 +23,11 @@ interface BoxGroup {
 export class DispatchComponent implements OnInit {
   title = 'Despacho de contenedores';
   expedientes   : Concepto[] = []
-  @ViewChildren('container') containerReferences!: QueryList<CdkDropList>;
-  @ViewChild('warehouse') warehouseRef!: CdkDropList ;
+  @ViewChildren('container') containerReferences!: QueryList<CdkDropList<Bulto[]>>;
+  @ViewChild('warehouse') warehouseRef!: CdkDropList<Bulto[]> ;
 
   warehouseBox: Box = {
+    title:"Afuera",
     name: "warehouse",
     ref: "cdk-drop-list-0",
     data:[]
