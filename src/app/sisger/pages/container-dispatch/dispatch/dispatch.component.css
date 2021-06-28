@@ -1,9 +1,18 @@
 .container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  justify-content: space-between;
   align-items: center;
 }
+
+.list-container {
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: 2em;
+  align-self: flex-start;
+}
+.list-container::-webkit-scrollbar {    display: none;}
 
 h2 {
   display: flex;
@@ -11,12 +20,6 @@ h2 {
   align-self: center;
 }
 
-.list-container {
-  flex-direction: row;
-  justify-content: space-around;
-  margin-top: 2em;
-
-}
 
 .column-container {
   width: 400px;
@@ -36,6 +39,9 @@ mat-card {
 .list {
   border: RGBA(46, 49, 49, .7) solid 1px;
   border-radius: 2px;
+  max-height: 80vh;
+  min-height: 30vh;
+  overflow-y: auto;
 }
 
 .list-item {
