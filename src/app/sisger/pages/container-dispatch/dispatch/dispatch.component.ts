@@ -37,6 +37,7 @@ export class DispatchComponent implements OnInit {
 
   containersBox:Box[] = [
     {
+      title: "Pared No.1",
       name: 'container1',
       ref: "cdk-drop-list-1",
       data:[]
