@@ -4,6 +4,7 @@ import { ContainerService } from '../../../services/container.service';
 import { Bulto, Concepto, Contenedor } from '../../../interfaces/container.interface';
 
 interface Box {
+  title: string;
   name: string;
   ref: string;
   data: Bulto[]
