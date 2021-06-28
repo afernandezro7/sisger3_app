@@ -28,7 +28,8 @@ export interface Bulto {
     sisgerCode:               string;
     indice:                   number;
     concepto_bultoToconcepto: Concepto;
-    dentro:                   Boolean
+    dentro:                   Boolean;
+    pared:                    number | null;
     mercancia:                Mercancia[];
 }
 
