@@ -5,40 +5,29 @@
 
 <div class="container">
 
-    <div class="list-container">
-      <div class="done-container column-container">
-        <h2>Almacén</h2>
-        
-        <div class="list"
-             cdkDropList
-             #warehouse="cdkDropList"
-             [cdkDropListData]="warehouseBox.data"
-             
-             (cdkDropListDropped)="drop($event)"          
-        >       
-          <mat-card *ngFor="let bulto of warehouseBox.data" cdkDrag>
-            <mat-card-header>
-              <mat-card-title>{{bulto.sisgerCode}}</mat-card-title>
-              <mat-card-subtitle>{{bulto | client}}</mat-card-subtitle>
-            </mat-card-header>
-          </mat-card>
-        </div>
+  <div class="list-warehouse">
+    <div class="done-container column-container">
+      <h2>Almacén</h2>
+
+      <div class="list" cdkDropList #warehouse="cdkDropList" [cdkDropListData]="warehouseBox.data"
+        (cdkDropListDropped)="drop($event)">
+        <mat-card *ngFor="let bulto of warehouseBox.data" cdkDrag>
+          <mat-card-header>
+            <mat-card-title>{{bulto.sisgerCode}}</mat-card-title>
+            <mat-card-subtitle>{{bulto | client}}</mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
       </div>
     </div>
-  
-    <div class="list-container"> 
-      
-  
+  </div>
+
+  <div class="list-wrapper">
+
+    <div class="list-container">
       <div *ngFor="let column of containersBox" class="todo-container column-container">
-        <h2>Contenedor # 7 / JULIO - 2021 No.{{column.name}}</h2>
-        <div class="list"
-            cdkDropList
-            #container="cdkDropList"
-            #{{column.name}}="cdkDropList"
-            [cdkDropListData]="column.data"
-            
-            (cdkDropListDropped)="drop($event)"
-        >
+        <h2>{{column.title}}</h2>
+        <div class="list" cdkDropList #container="cdkDropList" #{{column.name}}="cdkDropList"
+          [cdkDropListData]="column.data" (cdkDropListDropped)="drop($event)">
           <mat-card *ngFor="let bulto of column.data" cdkDrag>
             <mat-card-header>
               <mat-card-title>{{bulto.sisgerCode}}</mat-card-title>
@@ -47,8 +36,7 @@
           </mat-card>
         </div>
       </div>
-
-      
-  
     </div>
+
   </div>
+</div>

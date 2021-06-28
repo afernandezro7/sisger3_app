@@ -1,18 +1,38 @@
 .container {
+  position: absolute;
+  width: 100vw;
+  height: 90vh;
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
   align-items: center;
 }
 
+
+.list-warehouse {
+  margin-top: 1em;
+  position: absolute;
+  left: 2%;
+  top: 0;
+}
+.list-wrapper {
+  position: absolute;
+  right: 3%;
+  top: 0;
+  max-width: 72%;
+  overflow: auto;
+
+}
+
 .list-container {
-  flex-direction: row;
-  justify-content: flex-start;
-  margin-top: 2em;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  margin-top: 1em;
   align-self: flex-start;
 }
-.list-container::-webkit-scrollbar {    display: none;}
 
 h2 {
   display: flex;
@@ -22,8 +42,8 @@ h2 {
 
 
 .column-container {
-  width: 400px;
-  max-width: 100%;
+  width: 340px;
+  min-width: 340px;
   margin: 0 25px 25px 0;
   display: inline-block;
   vertical-align: top;
