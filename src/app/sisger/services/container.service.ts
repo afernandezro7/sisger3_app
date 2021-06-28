@@ -17,4 +17,8 @@ export class ContainerService {
     const url: string = `${this.apiBaseUrl}/contenedor/${idContainer}`
     return this.http.get<Contenedor>(url)
   }
+
+  setStatusToBultos() {
+    // this.http.post(url,)
+  }
 }
