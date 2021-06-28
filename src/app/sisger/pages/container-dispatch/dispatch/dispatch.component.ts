@@ -58,7 +58,9 @@ export class DispatchComponent implements OnInit {
           this.expedientes = contenedor.concepto
           
           this.expedientes.map( (expediente: Concepto) => {
-            if(expediente.bulto)this.warehouseBox.data.push(...expediente.bulto)
+            if(expediente.bulto){
+              expediente.bulto.map( (bulto:Bulto) => this.relocateBulto(bulto))            
+            }
             
             //Connect dragsList one together
             this.connectDragListTogether()
@@ -85,6 +87,39 @@ export class DispatchComponent implements OnInit {
   }
 
 
+  moveItemInterColumn(event: CdkDragDrop<Bulto[]>) {
+    const groupRef = event.container.id
+
+    
+    //Copia del contenedor destino sin el item
+    const insideContainer = this.containerReferences.find( item => item.id === groupRef ) 
+    let previousGroupItems:Bulto[] = insideContainer ? [...insideContainer.data] : [ ...this.warehouseRef.data]
+ 
+    //transferir item al contenedor destino
+    transferArrayItem(event.previousContainer.data,event.container.data,event.previousIndex,event.currentIndex);
+    
+
+
+    // Recorrer el contenedor destino 
+    event.container.data.forEach( (bulto:Bulto) => {
+
+      let exist = previousGroupItems.find( element => element.id === bulto.id )
+
+      if(!exist){
+
+        if(groupRef==="cdk-drop-list-0"){
+          bulto.dentro = false
+          
+        }else{
+          bulto.dentro = true
+
+        }
+
+        // todo save in db "dentro" status and pared number
+      }
+    });
+  }
+
   connectDragListTogether() {
     this.warehouseRef.connectedTo = this.containerReferences.toArray()
     this.containerReferences.forEach( item => {
@@ -95,46 +130,47 @@ export class DispatchComponent implements OnInit {
     })
   }
 
+  relocateBulto(bulto:Bulto){
 
-  moveItemInterColumn(event: CdkDragDrop<Bulto[]>) {
-    const groupRef = event.container.id
-    let previousGroupItems:Bulto[] = []
 
-    previousGroupItems = [
-      ...this.containerReferences.find( item => item.id === groupRef )?.data || []
-    ]
+    if(bulto.dentro && bulto.pared){
+      const pared: number = bulto.pared;
 
-    transferArrayItem(event.previousContainer.data,event.container.data,event.previousIndex,event.currentIndex);
-      
-
-    event.container.data.forEach( (bulto:Bulto) => {
-
-      let exist = previousGroupItems.find( element => element.id === bulto.id )
-
-      if(!exist){
-        if(groupRef==="cdk-drop-list-0"){
-          bulto.dentro = false
-        }else{
-          bulto.dentro = true
-        }
+      if(pared > this.containersCount){
+        const totalToCreate:number = pared - this.containersCount;
+        this.createContainer(totalToCreate)
       }
-    });
-  }
 
-  createContainer() {
-    this.containersCount++
+      this.containersBox[pared-1].data.push(bulto)
 
-    const newContainer:Box = {
-      name: 'container'+this.containersCount,
-      ref: `cdk-drop-list-${this.containersCount}`,
-      data:[]
+
+    }else{
+      this.warehouseBox.data.push(bulto)
     }
-
-    this.containersBox.push(newContainer)
-    this.detector.detectChanges()
-
-    this.connectDragListTogether()
   }
+
+  createContainer(totalContainer:number=1) {
+
+    for (let i = 0; i < totalContainer; i++) {
+      this.containersCount++
+
+      const newContainer:Box = {
+        title:`Pared No.${this.containersCount}`,
+        name: 'container'+this.containersCount,
+        ref: `cdk-drop-list-${this.containersCount}`,
+        data:[]
+      }
+      this.containersBox.push(newContainer)
+      this.detector.detectChanges()
+
+      this.connectDragListTogether()
+    }
+    
+  }
+    
+
+
+  
 
 }
 
