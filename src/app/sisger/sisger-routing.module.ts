@@ -15,7 +15,7 @@ const routes: Routes = [
         component: NoticationComponent
       },
       {
-        path: 'despacho',
+        path: 'despacho/:id',
         component: DispatchComponent
       },
       {

@@ -1,11 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import { switchMap } from "rxjs/operators"
-import { ContainerService } from '../../../services/container.service';
-import { Bulto, Concepto, Contenedor } from '../../../interfaces/container.interface';
-import { BultoService } from '../../../services/bulto.service';
-import { ActivatedRoute } from '@angular/router';
-
+import { Injectable, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Bulto } from '../interfaces/container.interface';
+import { CdkDragDrop, moveItemInArray, CdkDropList, transferArrayItem } from '@angular/cdk/drag-drop';
+import { BultoService } from './bulto.service';
 
 interface Box {
   title: string;
@@ -19,18 +15,15 @@ interface BoxGroup {
 }
 
 
-@Component({
-  selector: 'app-dispatch',
-  templateUrl: './dispatch.component.html',
-  styleUrls: ['./dispatch.component.css']
+@Injectable({
+  providedIn: 'root'
 })
-export class DispatchComponent implements OnInit {
-  title = 'Despacho de contenedores';
-  expedientes   : Concepto[] = []
-  contenedor: Contenedor | null = null
-  @ViewChildren('container') containerReferences!: QueryList<CdkDropList<Bulto[]>>;
-  @ViewChild('warehouse') warehouseRef!: CdkDropList<Bulto[]> ;
-  
+export class DragDropService {
+
+  containerReferences!: QueryList<CdkDropList<Bulto[]>>;
+  warehouseRef!: CdkDropList<Bulto[]> ;
+
+  audio:HTMLAudioElement = new Audio('../../../../../assets/audios/new-ticket.mp3')
 
   warehouseBox: Box = {
     title:"Afuera",
@@ -38,7 +31,7 @@ export class DispatchComponent implements OnInit {
     ref: "cdk-drop-list-0",
     data:[]
   }
-
+  
   containersCount:number = 1
 
   containersBox:Box[] = [
@@ -50,51 +43,12 @@ export class DispatchComponent implements OnInit {
     }
   ]
 
-  audio:HTMLAudioElement = new Audio('../../../../../assets/audios/new-ticket.mp3')
-
-
-
-  constructor( 
-    private containerService:ContainerService,
+  constructor(
     private detector:ChangeDetectorRef,
-    private bultoService: BultoService,
-    private activatedRoute: ActivatedRoute) 
+    private bultoService: BultoService) 
   { }
 
 
-  ngOnInit(): void {
-
-    this.activatedRoute.params
-      .pipe( switchMap( param => this.containerService.getContainerById(param.id)) )
-      .subscribe( ( contenedor: Contenedor ) => { 
-        console.log(contenedor)
-
-        if(contenedor){
-          this.contenedor = contenedor
-          this.expedientes = contenedor.concepto
-          
-          this.expedientes.map( (expediente: Concepto) => {
-            if(expediente.bulto){
-              expediente.bulto.map( (bulto:Bulto) => this.relocateBulto(bulto))            
-            }
-            
-            //Connect dragsList one together
-            this.connectDragListTogether()
-
-          })
-        }else{
-          this.contenedor = null
-        }
-
-
-      })
-
-
-  }
-
-
-
-  
   drop(event: CdkDragDrop<Bulto[]>) {
     
     if (event.previousContainer === event.container) {
@@ -104,7 +58,6 @@ export class DispatchComponent implements OnInit {
     }
   
   }
-
 
   moveItemInterColumn(event: CdkDragDrop<Bulto[]>) {
     const groupRef = event.container.id
@@ -143,7 +96,6 @@ export class DispatchComponent implements OnInit {
   }
 
   connectDragListTogether() {
-    this.detector.detectChanges()
     this.warehouseRef.connectedTo = this.containerReferences.toArray()
     this.containerReferences.forEach( item => {
         item.connectedTo =[ 
@@ -190,11 +142,4 @@ export class DispatchComponent implements OnInit {
     }
     
   }
-    
-
-
-  
-
 }
-
-

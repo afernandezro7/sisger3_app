@@ -1,5 +1,10 @@
 import { Client } from './client.interface';
 
+export interface PResponse<T> {
+    ok:             boolean;
+    msg:            string;
+    data?:          T
+}
 
 export interface Contenedor {
     id:             number;
